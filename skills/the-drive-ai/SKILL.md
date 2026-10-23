@@ -14,17 +14,17 @@ of moving files one API call at a time: the person sees one change, approves one
 Pick the first that fits:
 
 1. **You have an MCP client** (Claude Code, Codex, Cursor, Gemini CLI, VS Code, a chat host): add the server
-   `https://thedriveai.fastmcp.app/mcp`. The client runs the sign-in; the person signs in at thedrive.ai with whatever
+   `https://mcp.thedrive.ai/mcp`. The client runs the sign-in; the person signs in at thedrive.ai with whatever
    they already use (Google, Microsoft, Apple or email) and sees what you may do.
 2. **You have a shell and no MCP client**: `npx @thedriveai/cli login` prints an eight-letter code; the person
    approves it at `https://thedrive.ai/oauth/mcp/device`. Then `npx @thedriveai/cli ls /`, `put`, `cat`, `mv`, `ask`
    and friends; `npx @thedriveai/cli --help` lists them.
-3. **The person has no account, or is not here to sign in**: `npx @thedriveai/cli signup` makes a provisional
-   account and prints a claim link. Give the person the link: it shows them what you made before they sign in,
-   and one button makes it theirs. Until then the account is a sandbox: free, 1 GB, 20 agent tasks in all, nothing
-   that reaches outside (no sharing, publishing, invites, file requests, signatures or workflows), erased after
-   seven days if nobody claims it. A destructive change there is yours to confirm; after the claim it is the
-   person's.
+3. **The person has no account, or is not here to sign in**: `npx @thedriveai/cli signup --agent "<your name>"`
+   makes a provisional account and prints a claim link; the name is what the person sees on the link and in their
+   settings. Give the person the link: it shows them what you made before they sign in, and one button makes it
+   theirs. Until then the account is a sandbox: free, 1 GB, 20 agent
+   tasks in all, nothing that reaches outside (no sharing, publishing, invites, file requests, signatures and workflows), erased after 7
+   days if nobody claims it. A destructive change there is yours to confirm; after the claim it is the person's.
 
 Any OAuth client works too: discovery at `https://service.thedrive.ai/.well-known/oauth-authorization-server` (register a public client, PKCE or the
 device grant, scopes `read` (anything that only looks: find, read, list, who has access), `write` (change the person's own files: propose, apply and undo changesets, save files), `share` (change who can reach their files), `ask` (run the drive ai agent on the person's task allowance)), sign-up at `https://service.thedrive.ai/api/v1/oauth/mcp/signup`, then the token goes as a bearer to the
@@ -58,6 +58,7 @@ The tools, by group:
 - Find and read: `fs_tree, fs_digest`, `fs_ls`, `fs_find, fs_glob`, `fs_grep`, `fs_search`, `fs_read`, `fs_stat, fs_versions`, `fs_access`, `fs_duplicates, fs_hash_backfill`
 - Change: `changeset_propose`, `changeset_apply`, `changeset_status`, `changeset_undo`
 - Share and save: `share_set, share_revoke`, `share_publish`, `create_file_from_attachment, create_file_from_url`, `create_upload_ticket, create_file_from_upload, upload_file_content`
+- Provenance: `certify_document`, `verify_document`
 - The agent: `agent_ask, agent_continue`, `job_status`, `approval_status`, `get_current_user`
 
 ## Be honest about limits
